@@ -7,7 +7,7 @@ import { WorkspaceProvider } from '@/contexts/WorkspaceContext';
 import { ApiProvider } from '@/contexts/ApiContext';
 import { WalletConnect } from '@/components/WalletConnect';
 import { ContractLoader } from '@/components/ContractLoader';
-import { RecentContracts } from '@/components/RecentContracts';
+
 import { FunctionList } from '@/components/FunctionList';
 import { ResponsePanel } from '@/components/ResponsePanel';
 import { WorkspaceSidebar } from '@/components/WorkspaceSidebar';
@@ -91,11 +91,10 @@ function AppContent() {
           {/* Contract Loader */}
           <div className="border-b border-border bg-card/30 p-4 space-y-4">
             <ContractLoader />
-            <RecentContracts />
           </div>
 
           {/* Functions & Response Split */}
-          <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-0 min-h-0">
+          <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-0 min-h-0 overflow-y-auto xl:overflow-hidden">
             {/* Function List */}
             <div className="border-r border-border p-4 flex flex-col min-h-0">
               <FunctionList

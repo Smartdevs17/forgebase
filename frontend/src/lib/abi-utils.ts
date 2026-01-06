@@ -103,7 +103,7 @@ export function parseInputValue(value: string, type: string): any {
       const parsed = JSON.parse(trimmed);
       if (Array.isArray(parsed)) {
         const baseType = type.slice(0, -2);
-        return parsed.map((v) => parseInputValue(String(v), baseType));
+        return parsed.map((v) => parseInputValue(typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v), baseType));
       }
     } catch {
       // Try comma-separated

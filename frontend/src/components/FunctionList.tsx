@@ -70,7 +70,7 @@ export function FunctionList({ onResult, selectedFunction }: FunctionListProps) 
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="read" className="mt-0 data-[state=active]:flex flex-col h-[750px] overflow-y-auto scrollbar-thin pb-10">
+      <TabsContent value="read" className="mt-0 data-[state=active]:flex flex-col h-[500px] overflow-y-auto scrollbar-thin pb-10">
         {/* Internal scroll handled by TabsContent for fixed height */}
         <div ref={readScrollRef}>
           <div className="space-y-3 pt-2 pb-4">
@@ -96,7 +96,7 @@ export function FunctionList({ onResult, selectedFunction }: FunctionListProps) 
         </div>
       </TabsContent>
 
-      <TabsContent value="write" className="mt-0 data-[state=active]:flex flex-col h-[750px] overflow-y-auto scrollbar-thin pb-10">
+      <TabsContent value="write" className="mt-0 data-[state=active]:flex flex-col h-[500px] overflow-y-auto scrollbar-thin pb-10">
         {/* Same behavior for write functions */}
         <div ref={writeScrollRef}>
           <div className="space-y-3 pt-2 pb-4">

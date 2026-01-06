@@ -10,6 +10,7 @@ const envSchema = z.object({
 	BASE_ARCHIVE_NODE_URL: z.string().url(),
 	BASE_SEPOLIA_RPC_URL: z.string().url().optional(),
 	BASE_SEPOLIA_ARCHIVE_NODE_URL: z.string().url().optional(),
+	BASESCAN_API_KEY: z.string().optional(),
 	MONGODB_URI: z.string(),
 	API_PREFIX: z.string().default('/api/v1'),
 	CORS_ORIGIN: z.string().optional(),

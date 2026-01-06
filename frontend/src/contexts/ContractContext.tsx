@@ -10,6 +10,7 @@ interface ContractState {
   events: ParsedEvent[];
   chainId: number;
   isVerified: boolean;
+  isRecovered?: boolean;
 }
 
 interface ContractContextType {

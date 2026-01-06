@@ -78,6 +78,7 @@ export function FunctionCard({ fn, onResult, savedInputs }: FunctionCardProps) {
           success: true,
           data: result,
         });
+        setIsExecuting(false);
       } else {
         if (!walletClient || !isConnected) {
           toast.error('Please connect your wallet to execute write functions');

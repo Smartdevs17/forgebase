@@ -6,15 +6,22 @@ import { useContract } from '@/contexts/ContractContext';
 import { fetchContractFromExplorer, isValidAddress } from '@/lib/explorer-api';
 import { getContract } from '@/lib/api/services/contract.service';
 import { addRecentContract } from '@/lib/recent-contracts';
-import { Search, Upload, Loader2, FileCode2, X } from 'lucide-react';
+import { Search, Upload, Loader2, FileCode2, X, History } from 'lucide-react';
 import { useChainId } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
 import { toast } from 'sonner';
 import { Abi } from 'viem';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { RecentContracts } from '@/components/RecentContracts';
 
 export function ContractLoader() {
   const [address, setAddress] = useState('');
   const [isLoadingAbi, setIsLoadingAbi] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chainId = useChainId();
   const { contract, setContract, clearContract, isLoading, error, setError, setLoading } = useContract();
@@ -70,6 +77,7 @@ export function ContractLoader() {
         abi: contractData.abi as Abi,
         chainId,
         isVerified: contractData.is_verified,
+        isRecovered: contractData.is_verified === false
       });
       
       // Save to recent contracts
@@ -147,6 +155,17 @@ export function ContractLoader() {
           />
         </div>
 
+        <Popover open={isHistoryOpen} onOpenChange={setIsHistoryOpen}>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="icon" title="Recent Contracts">
+              <History className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[320px] p-4" align="end">
+             <RecentContracts onSelect={() => setIsHistoryOpen(false)} />
+          </PopoverContent>
+        </Popover>
+
         {!contract ? (
           <>
             <Button
@@ -206,17 +225,28 @@ export function ContractLoader() {
       )}
 
       {contract && (
-        <div className="flex items-center gap-3 animate-fade-in">
-          <Badge variant={contract.isVerified ? 'success' : 'warning'}>
-            {contract.isVerified ? 'Verified' : 'Unverified'}
-          </Badge>
-          <span className="font-medium">{contract.name}</span>
-          <span className="font-mono text-sm text-muted-foreground">
-            {contract.address.slice(0, 10)}...{contract.address.slice(-8)}
-          </span>
-          <Badge variant="secondary">
-            {contract.functions.length} functions
-          </Badge>
+        <div className="flex flex-col gap-2 animate-fade-in">
+          <div className="flex items-center gap-3">
+            <Badge variant={contract.isVerified ? 'success' : (contract.isRecovered ? 'warning' : 'destructive')}>
+              {contract.isVerified ? 'Verified' : (contract.isRecovered ? 'Recovered' : 'Unverified')}
+            </Badge>
+            <span className="font-medium">{contract.name}</span>
+            <span className="font-mono text-sm text-muted-foreground">
+              {contract.address.slice(0, 10)}...{contract.address.slice(-8)}
+            </span>
+            <Badge variant="secondary">
+              {contract.functions.length} functions
+            </Badge>
+          </div>
+          
+          {contract.isRecovered && (
+             <div className="text-xs text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-md px-3 py-2">
+               ⚠️ <strong>Contract not verified.</strong> Callable methods were recovered via bytecode analysis. 
+               Function names and types may be inferred.
+               <br/>
+               <span className="opacity-80">You can upload the original ABI manually if you have it.</span>
+             </div>
+          )}
         </div>
       )}
     </div>
