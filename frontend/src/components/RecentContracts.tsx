@@ -74,7 +74,7 @@ export function RecentContracts({ onSelect }: RecentContractsProps) {
         <Badge variant="secondary">{recentContracts.length}</Badge>
       </div>
 
-      <div className="max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+      <div className="max-h-[300px] overflow-y-auto pr-2 scrollbar-thin">
         <div className="space-y-2">
           {recentContracts.map((contract) => (
             <div

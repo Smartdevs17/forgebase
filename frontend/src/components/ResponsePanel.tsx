@@ -66,7 +66,7 @@ export function ResponsePanel({ results, onClear }: ResponsePanelProps) {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0 custom-scrollbar p-0">
+      <div className="max-h-[500px] overflow-y-auto scrollbar-thin p-0">
         <div className="p-4 space-y-4">
           {results.map((result) => (
             <div
