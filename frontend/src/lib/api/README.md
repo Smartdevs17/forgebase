@@ -1,6 +1,6 @@
 # API Integration Documentation
 
-This directory contains the complete API integration layer for the Rootstock InterAct frontend, following a repository pattern with centralized state management.
+This directory contains the complete API integration layer for the ForgeBase frontend, following a repository pattern with centralized state management.
 
 ## Structure
 
